@@ -53,8 +53,7 @@ public class TrieMapNodeWithChildrenAndValue<V> extends TrieMapNodeWithChildren<
     }
 
     @Override
-    public TrieMapNode<V> withChildrenAndValue(V value){
-        this.setValue(value);
+    public TrieMapNode<V> withChildren(){
         return this;
     }
 }

@@ -1,4 +1,5 @@
-public abstract class TrieMapNode<V> {
+public  class TrieMapNode<V> {
+
     public TrieMapNode(){}
 
     public V getValue(){
@@ -6,16 +7,20 @@ public abstract class TrieMapNode<V> {
     }
 
     public TrieMapNode<V> getChild(int i) {
-        return null;
+        return emptyNode();
     }
 
     public TrieMapNode<V> getChild(CharSequence key, int pos){
         return getChild(childIndex(key, pos));
     }
 
-    public void setValue(V value){}
+    public void setValue(V value){
+        throw new UnsupportedOperationException();
+    }
 
-    public void setChild(int i, TrieMapNode<V> node){}
+    public void setChild(int i, TrieMapNode<V> node){
+        throw new UnsupportedOperationException();
+    }
 
     public void setChild(CharSequence key, int pos, TrieMapNode<V> node){
         setChild(childIndex(key, pos), node);
@@ -37,7 +42,17 @@ public abstract class TrieMapNode<V> {
         return new TrieMapNodeWithValue<V>(value);
     }
 
-    public TrieMapNode<V> withChildrenAndValue(V value){
-        return new TrieMapNodeWithChildrenAndValue<>(value);
+    public TrieMapNode<V> withChildren(){
+        return new TrieMapNodeWithChildren<>();
+    }
+
+    public boolean isEmpty(){
+        return this == EMPTY_NODE;
+    }
+
+    private final static TrieMapNode<?> EMPTY_NODE=new TrieMapNode<>();
+
+    public static <V1> TrieMapNode<V1> emptyNode(){
+        return (TrieMapNode<V1>) EMPTY_NODE;
     }
 }

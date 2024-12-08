@@ -21,8 +21,8 @@ public class TrieMapNodeWithValue<V> extends TrieMapNode<V> {
     }
 
     @Override
-    public TrieMapNode<V> withChildrenAndValue(V value) {
-        return new TrieMapNodeWithChildrenAndValue<>(value);
+    public TrieMapNode<V> withChildren() {
+        return new TrieMapNodeWithChildrenAndValue<>(this.value);
     }
 
     public boolean hasValue(){

@@ -12,11 +12,11 @@ public class TrieMap <K extends CharSequence, V>{
 
         for(int i = 0; i < k.length(); i++) {
             TrieMapNode<V> child = temp.getChild(k, i);
-            if ( child == null ) {
+            if ( child.isEmpty() ) {
                 if (returnToPreviousIfNotFound) {
                     break;
                 }
-                return null;
+                return TrieMapNode.emptyNode();
             }
             temp = child;
         }
@@ -36,8 +36,7 @@ public class TrieMap <K extends CharSequence, V>{
      * the "if" is not implemented
      */
     public V get(K k){
-        TrieMapNode<V> term = navigation(k, false);
-        return term != null? term.getValue(): null;
+        return navigation(k, false).getValue();
     }
 
 
@@ -62,24 +61,10 @@ public class TrieMap <K extends CharSequence, V>{
         TrieMapNode<V> temp = trieMapNodeHead;
         for(int i = 0; i < k.length(); i++){
             TrieMapNode<V> child = temp.getChild(k, i);
-            if (child == null){
-                if(i == k.length() - 1){
-                    child = new TrieMapNodeWithValue<>(v);
-                }
-                else{
-                    child = new TrieMapNodeWithChildren<>();
-                }
-                temp.setChild( k, i , child);
-            }
-            else{
-                if(i == k.length() - 1){
-                    temp.setChild( k, i, child.withValue(v) );
-                }
-                else if (child.hasValue()){
-                    child = child.withChildrenAndValue(child.getValue());
-                    temp.setChild(k, i, child);
-                }
-            }
+
+            child = i == k.length() - 1 ? child.withValue(v) : child.withChildren();
+            temp.setChild(k, i, child);
+
             temp = child;
         }
         return v;
